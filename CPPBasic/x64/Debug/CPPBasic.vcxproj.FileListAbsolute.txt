@@ -1,0 +1,2 @@
+D:\Visual Studio 2019\Project\CPPBasic\x64\Debug\CPPBasic.exe
+D:\Visual Studio 2019\Project\CPPBasic\x64\Debug\CPPBasic.pdb

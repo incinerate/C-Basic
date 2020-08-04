@@ -56,6 +56,14 @@ void SavingAccount::record(int date, double amount) {
 	balance += amount;
 }
 
+void SavingAccount::deposit(int date, double amount) {
+	record(date, amount);
+}
+
+void SavingAccount::withdraw(int date, double amount) {
+	record(date, -amount);
+}
+
 void SavingAccount::settle(int date) {
 	double interest = accumulate(date) * rate / 365;
 	if (interest != 0) {

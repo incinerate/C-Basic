@@ -146,6 +146,7 @@
     <ClCompile Include="TestGetline.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="account.h" />
     <ClInclude Include="PointArray.h" />
     <ClInclude Include="Point.h" />
   </ItemGroup>
