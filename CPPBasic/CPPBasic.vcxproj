@@ -139,14 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="account.cpp" />
     <ClCompile Include="ConstPointer.cpp" />
     <ClCompile Include="ClassPointer.cpp" />
+    <ClCompile Include="date.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SplitFloat.cpp" />
     <ClCompile Include="TestGetline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="account.h" />
+    <ClInclude Include="date.h" />
     <ClInclude Include="PointArray.h" />
     <ClInclude Include="Point.h" />
   </ItemGroup>

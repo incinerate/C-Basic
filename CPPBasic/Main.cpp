@@ -1,23 +1,32 @@
 #include	"account.h"
+#include	"date.h"
+#include	<iostream>
+
+using namespace std;
 
 int main() {
-	//建立账户
-	SavingAccount sa0(1, 21325302, 0.015);
-	SavingAccount sa1(1, 58320212, 0.015);
+	Date date(2008, 11, 1); //起始日期
+	//建立几个账户
+	string a = "S3755217";
+	string b = "02342342";
+	SavingsAccount accounts[] = {
+		SavingsAccount(date,a,0.015), SavingsAccount(date,b,0.015)
+	};
 
-	//几笔账目
-	sa0.deposit(5, 5000);
-	sa1.deposit(25, 10000);
-	sa0.deposit(45, 5500);
-	sa1.withdraw(60, 4000);
+	const int n = sizeof(accounts) / sizeof(SavingsAccount);
+	//几笔账户
+	accounts[0].deposit(Date(2008, 11, 5), 5000, "salary");
+	accounts[1].deposit(Date(2008, 11, 25), 10000, "sell stock 0323");
+	accounts[0].deposit(Date(2008, 12, 5), 5500, "salary");
+	accounts[1].withdraw(Date(2008, 12, 20), 4000, "buy a laptop");
 
-	//结账日
-	sa0.settle(90);
-	sa1.settle(90);
+	//开户后第90天到了银行的计息日， 结算所有帐户的年息
+	cout << endl; for (int i = 0; i < n; i++) {
+		accounts[i].settle(Date(2009, 1, 1));
+		accounts[i].show(); cout << endl;
+	}
+	//输出各个帐户信息
+	cout << "Total: " << SavingsAccount::getTotal() << endl;
 
-	//输出账户信息
-	sa0.show();
-	cout << endl;
-	sa1.show();
-	cout << endl;
+	return 0;
 }

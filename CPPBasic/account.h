@@ -1,80 +1,41 @@
-#pragma once
 #ifndef __ACCOUNT_H__
 #define __ACCOUNT_H__
-#endif // !__ACCOUNT_H__
 
-#include	<iostream>
+#include	"date.h"
+#include	<string>
 using namespace std;
 
-class SavingAccount // 储蓄账户类
+//储蓄账户类 
+class SavingsAccount
 {
-public:
-	// 构造函数
-	SavingAccount(int date, int id, double rate);
-	~SavingAccount();
-
-	int getId() { return id; }
-	double getBalance() { return balance; }
-	double getRate() { return rate; }
-	
-	// 存钱
-	void deposit(int date, double amount);
-	// 取钱
-	void withdraw(int date, double amount);
-	// 结算利息，每年1月1日调用
-	void settle(int date);
-	// 显示账户信息
-	void show();
 private:
-	int id; //账号
-	double balance; //余额
-	double rate; //存款的年利率
-	int lastDate; //上次变更余额的日期
+	string id; //账号 
+	double balance; //余额 
+	double rate; //存款的年利率 
+	Date lastDate; //上次变更余额的时期 
 	double accumulation; //余额按日累加之和
-	static double total; //所有账户的总金额
+	static double total; //所有账户的总金额 
 
-	//记录一笔账
-	void record(int date, double amount);
-	
-	//获得到指定日期为止的累计金额
-	double const accumulate(int date) {
-		return accumulation + balance * (date - lastDate);
+	//记录一笔账，date为日期，amount为金额，desc为说明
+	void record(const Date& date, double amount, const string& desc);
+	void error(const string& msg) const;
+	//获得指定日期为止的存款金额按日累加
+	double accumulate(const Date& date) const {
+		return accumulation + balance * date.distance(lastDate);
 	}
+public:
+	SavingsAccount(Date& date, string& id1, double rate);
+	const string& getId() { return id; }
+	const double getBalance() { return balance; }
+	const double getRate() { return rate; }
+	static double getTotal() { return total; }
+	//存入现金
+	void deposit(const Date& date, double amount, const string& desc);
+	//取出现金
+	void withdraw(const Date& date, double amount, const string& desc);
+	//结算利息，每年一月一日调用一次该函数
+	void settle(const Date& date);
+	//显示账户信息
+	const void show();
 };
-
-
-inline SavingAccount::SavingAccount(int date, int id, double rate)
-	:id(id), balance(0), lastDate(date), rate(rate), accumulation(0)
-{
-	cout << date << "\t#" << id << "is created" << endl;
-}
-
-void SavingAccount::record(int date, double amount) {
-	accumulation = accumulate(date);
-	lastDate = date;
-	amount = floor(amount * 100 + 0.5) / 100; // 保留小数点后两位
-	balance += amount;
-}
-
-void SavingAccount::deposit(int date, double amount) {
-	record(date, amount);
-}
-
-void SavingAccount::withdraw(int date, double amount) {
-	record(date, -amount);
-}
-
-void SavingAccount::settle(int date) {
-	double interest = accumulate(date) * rate / 365;
-	if (interest != 0) {
-		record(date, interest);
-	}
-	accumulation = 0;
-}
-
-void SavingAccount::show() {
-	cout << "#" << id << "\tBalance:" << balance;
-}
-SavingAccount::~SavingAccount()
-{
-}
+#endif // !__ACCOUNT_H__
